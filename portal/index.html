@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0c12">
+<meta name="robots" content="noindex">
+<title>حسابي — النوبي</title>
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c12; --bg2: #0f121b; --surface: #141826; --surface2: #1b2032;
+    --line: rgba(255,255,255,.07); --line2: rgba(255,255,255,.13);
+    --text: #eef0f6; --muted: #8b92a8;
+    --gold: #f4b63f; --green: #34d399; --red: #fb6f7c; --blue: #60a5fa;
+    --grad: linear-gradient(135deg, #f4b63f 0%, #ff8a3d 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: Cairo, 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text);
+    -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+  }
+  body::before {
+    content: ''; position: fixed; width: 520px; height: 520px; top: -260px; left: 50%; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(244,182,63,.2), transparent 65%); pointer-events: none; z-index: 0;
+  }
+  button, input { font: inherit; color: inherit; }
+  .wrap { position: relative; z-index: 1; max-width: 520px; margin: 0 auto; padding: 22px 16px 40px; }
+  .brand { display: flex; align-items: center; gap: 12px; justify-content: center; margin: 18px 0 26px; }
+  .logo { width: 48px; height: 48px; border-radius: 15px; background: var(--grad); display: grid; place-items: center;
+          font-weight: 800; font-size: 26px; color: #1a1205; box-shadow: 0 12px 30px -10px rgba(255,138,61,.7); }
+  .brand b { font-size: 21px; font-weight: 800; display: block; line-height: 1.2; }
+  .brand small { color: var(--muted); font-size: 13px; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px; }
+  .login h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .login p { color: var(--muted); font-size: 14px; margin-bottom: 20px; line-height: 1.8; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13.5px; font-weight: 700; color: var(--muted); margin-bottom: 7px; }
+  .field input { width: 100%; background: var(--bg2); border: 1px solid var(--line2); border-radius: 14px; padding: 14px 16px;
+                 font-size: 18px; outline: none; text-align: left; direction: ltr; letter-spacing: .5px; transition: .2s; }
+  .field input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(244,182,63,.14); }
+  .field .hint { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  .pin { letter-spacing: 14px !important; text-align: center !important; font-weight: 800; }
+  .btn { width: 100%; border: 0; border-radius: 14px; padding: 15px; font-weight: 800; font-size: 16px; cursor: pointer;
+         background: var(--grad); color: #1a1205; box-shadow: 0 12px 26px -12px rgba(255,138,61,.8); transition: .15s; }
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .6; }
+  .err { background: rgba(251,111,124,.1); border: 1px solid rgba(251,111,124,.3); color: var(--red); border-radius: 12px;
+         padding: 11px 14px; font-size: 14px; margin-bottom: 14px; display: none; }
+  .err.show { display: block; }
+  .secure { text-align: center; color: var(--muted); font-size: 12.5px; margin-top: 16px; }
+
+  .hello { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .hello h2 { font-size: 22px; font-weight: 800; }
+  .hello small { color: var(--muted); font-size: 13px; display: block; }
+  .ghost { background: var(--surface); border: 1px solid var(--line2); border-radius: 12px; padding: 8px 14px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--muted); }
+
+  .hero { background: var(--grad); color: #1a1205; border-radius: 24px; padding: 22px; position: relative; overflow: hidden; margin-bottom: 14px; }
+  .hero::after { content: ''; position: absolute; width: 220px; height: 220px; left: -70px; bottom: -120px; border-radius: 50%; background: rgba(255,255,255,.2); }
+  .hero .t { font-size: 14px; font-weight: 700; opacity: .75; }
+  .hero .v { font-size: 40px; font-weight: 800; letter-spacing: -1px; line-height: 1.2; }
+  .hero .v small { font-size: 16px; opacity: .7; margin-inline-start: 4px; }
+  .hero .bar { height: 8px; background: rgba(26,18,5,.15); border-radius: 99px; margin: 14px 0 8px; overflow: hidden; }
+  .hero .bar i { display: block; height: 100%; background: #1a1205; border-radius: 99px; }
+  .hero .row { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; opacity: .8; }
+
+  .next { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .next .ic { width: 50px; height: 50px; border-radius: 15px; display: grid; place-items: center; font-size: 22px; background: var(--surface2); flex-shrink: 0; }
+  .next .meta { flex: 1; }
+  .next .t { color: var(--muted); font-size: 13px; font-weight: 600; }
+  .next .d { font-weight: 800; font-size: 17px; }
+  .next .a { font-weight: 800; font-size: 20px; text-align: left; }
+  .next.over { border-color: rgba(251,111,124,.35); background: linear-gradient(135deg, rgba(251,111,124,.12), var(--surface)); }
+  .next.over .ic { background: rgba(251,111,124,.15); }
+  .next.done { border-color: rgba(52,211,153,.35); background: linear-gradient(135deg, rgba(52,211,153,.12), var(--surface)); }
+
+  .sec { font-weight: 800; font-size: 16px; margin: 22px 4px 10px; display: flex; justify-content: space-between; align-items: center; }
+  .sec small { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+  .contract { padding: 0; overflow: hidden; margin-bottom: 14px; }
+  .c-head { padding: 16px 18px; display: flex; gap: 12px; align-items: center; cursor: pointer; }
+  .c-head .dev { font-weight: 800; font-size: 16px; }
+  .c-head .sub { color: var(--muted); font-size: 12.5px; }
+  .c-head .chev { margin-inline-start: auto; color: var(--muted); transition: .2s; }
+  .contract.open .chev { transform: rotate(180deg); }
+  .c-stats { display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 18px 14px; gap: 8px; }
+  .c-stats div { background: var(--bg2); border-radius: 12px; padding: 8px 10px; }
+  .c-stats .t { color: var(--muted); font-size: 11.5px; font-weight: 600; }
+  .c-stats .v { font-weight: 800; font-size: 15px; }
+  .c-bar { height: 6px; background: var(--surface2); margin: 0 18px 16px; border-radius: 99px; overflow: hidden; }
+  .c-bar i { display: block; height: 100%; background: var(--grad); }
+  .c-body { display: none; border-top: 1px solid var(--line); }
+  .contract.open .c-body { display: block; }
+  .inst { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); }
+  .inst:last-child { border-bottom: 0; }
+  .inst .n { width: 30px; height: 30px; border-radius: 10px; background: var(--surface2); display: grid; place-items: center; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+  .inst .m { flex: 1; }
+  .inst .m b { font-size: 14.5px; }
+  .inst .m div { color: var(--muted); font-size: 12px; }
+  .inst .amt { font-weight: 800; }
+  .pill { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
+  .p-paid { color: var(--green); background: rgba(52,211,153,.13); }
+  .p-over { color: var(--red); background: rgba(251,111,124,.13); }
+  .p-today { color: var(--gold); background: rgba(244,182,63,.15); }
+  .p-later { color: var(--muted); background: var(--surface2); }
+  .p-part { color: var(--blue); background: rgba(96,165,250,.13); }
+  .pays { padding: 4px 0; }
+  .pay { display: flex; justify-content: space-between; padding: 11px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .pay:last-child { border-bottom: 0; }
+  .pay span { color: var(--muted); }
+  .pay b { color: var(--green); }
+
+  .contact { display: flex; gap: 10px; margin-top: 18px; }
+  .contact a { flex: 1; text-align: center; text-decoration: none; padding: 13px; border-radius: 14px; font-weight: 800; }
+  .wa { background: #25d366; color: #05200f; }
+  .call { background: var(--surface); border: 1px solid var(--line2); color: var(--text); }
+  .foot { text-align: center; color: var(--muted); font-size: 12px; margin-top: 22px; line-height: 1.8; }
+  .hide { display: none !important; }
+  .fade { animation: fade .35s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .spin { display: inline-block; width: 18px; height: 18px; border: 2.5px solid rgba(26,18,5,.3); border-top-color: #1a1205; border-radius: 50%; animation: sp .7s linear infinite; vertical-align: middle; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><div class="logo">ن</div><div><b id="shopName">النوبي</b><small>متابعة الأقساط</small></div></div>
+
+  <!-- Login -->
+  <section id="loginView" class="fade">
+    <form class="card login" id="loginForm" autocomplete="on" novalidate>
+      <h1>اعرف حسابك 👋</h1>
+      <p>اكتب رقم موبايلك المسجّل عندنا، وآخر 4 أرقام من رقمك القومي.</p>
+      <div class="err" id="err"></div>
+      <div class="field">
+        <label for="phone">رقم الموبايل</label>
+        <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01xxxxxxxxx" required>
+      </div>
+      <div class="field">
+        <label for="nid">آخر 4 أرقام من الرقم القومي</label>
+        <input id="nid" class="pin" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off" required>
+      </div>
+      <button class="btn" id="go" type="submit">دخول</button>
+      <div class="secure">🔒 بياناتك محدش يقدر يشوفها غيرك</div>
+    </form>
+  </section>
+
+  <!-- Account -->
+  <section id="accView" class="hide"></section>
+</div>
+
+<script src="config.js"></script>
+<script>
+'use strict';
+const CFG = window.NOUBY_CONFIG || {};
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const toAr = (s) => String(s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+const MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const pad = n => String(n).padStart(2, '0');
+const toStr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseD = s => { const [y, m, d] = String(s).slice(0, 10).split('-').map(Number); return new Date(y, m - 1, d); };
+const today = () => toStr(new Date());
+const fmtD = s => { if (!s) return '—'; const d = parseD(s); return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; };
+const days = (a, b) => Math.round((parseD(b) - parseD(a)) / 86400000);
+const r2 = n => Math.round((+n || 0) * 100) / 100;
+const money = n => r2(n).toLocaleString('en-US', { maximumFractionDigits: 2 });
+let CUR = 'ج.م';
+const M = n => `${money(n)} <small>${esc(CUR)}</small>`;
+
+function rel(s) {
+  const n = days(today(), s);
+  if (n === 0) return 'النهارده';
+  if (n === 1) return 'بكرة';
+  if (n < 0) return `متأخر ${-n} يوم`;
+  return `بعد ${n} يوم`;
+}
+function st(i) {
+  if (i.amount - i.paid <= 0.001) return 'paid';
+  const n = days(today(), i.due);
+  if (n < 0) return 'over';
+  if (n === 0) return 'today';
+  return i.paid > 0 ? 'part' : 'later';
+}
+const PL = { paid: ['p-paid', 'اتدفع ✓'], over: ['p-over', 'متأخر'], today: ['p-today', 'النهارده'], later: ['p-later', 'لسه'], part: ['p-part', 'جزء منه'] };
+
+$('#shopName').textContent = CFG.SHOP_NAME || 'النوبي';
+document.title = `حسابي — ${CFG.SHOP_NAME || 'النوبي'}`;
+try { const p = localStorage.getItem('nouby-phone'); if (p) $('#phone').value = p; } catch {}
+
+async function call(phone, nid4) {
+  const r = await fetch(`${String(CFG.SUPABASE_URL).replace(/\/+$/, '')}/rest/v1/rpc/customer_portal`, {
+    method: 'POST',
+    headers: { apikey: CFG.SUPABASE_ANON_KEY, Authorization: `Bearer ${CFG.SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_phone: phone, p_nid4: nid4 })
+  });
+  if (!r.ok) throw new Error('server');
+  return r.json();
+}
+
+function showErr(m) { const e = $('#err'); e.textContent = m; e.classList.add('show'); }
+
+$('#loginForm').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  $('#err').classList.remove('show');
+  const phone = toAr($('#phone').value).replace(/\D/g, '');
+  const nid = toAr($('#nid').value).replace(/\D/g, '');
+  if (phone.length < 10) return showErr('اكتب رقم الموبايل صح (11 رقم)');
+  if (nid.length !== 4) return showErr('اكتب آخر 4 أرقام من الرقم القومي');
+  const b = $('#go'); b.disabled = true; b.innerHTML = '<span class="spin"></span>';
+  try {
+    const d = await call(phone, nid);
+    if (d.error === 'locked') return showErr('حاولت كتير بكود غلط. استنى ربع ساعة وجرّب تاني، أو كلّم المحل.');
+    if (d.error) return showErr(`الرقم أو الكود مش صح.${d.left !== undefined && d.left <= 2 ? ` فاضلك ${d.left} محاولات.` : ''} لو مش متأكد كلّم المحل.`);
+    try { localStorage.setItem('nouby-phone', phone); } catch {}
+    renderAcc(d);
+  } catch (e) {
+    showErr('في مشكلة في الاتصال. اتأكد إن النت شغال وجرّب تاني.');
+  } finally { b.disabled = false; b.textContent = 'دخول'; }
+});
+
+function renderAcc(d) {
+  if (d.shop) { CUR = d.shop.currency || CUR; if (d.shop.name) { $('#shopName').textContent = d.shop.name; } }
+  const shopPhone = (d.shop && d.shop.phone) || CFG.SHOP_PHONE || '';
+  const cs = (d.contracts || []).map(c => {
+    const ins = (c.installments || []).map(i => ({ ...i, amount: +i.amount || 0, paid: +i.paid || 0 }));
+    const rem = r2(ins.reduce((s, i) => s + (i.amount - i.paid), 0));
+    const paid = r2((+c.downPayment || 0) + ins.reduce((s, i) => s + i.paid, 0));
+    const over = ins.filter(i => st(i) === 'over');
+    return { ...c, ins, rem, paid, over, overAmt: r2(over.reduce((s, i) => s + i.amount - i.paid, 0)),
+             next: ins.find(i => i.amount - i.paid > 0.001), pct: c.totalPrice ? Math.min(100, paid / c.totalPrice * 100) : 100 };
+  });
+  const rem = r2(cs.reduce((s, c) => s + c.rem, 0));
+  const total = cs.reduce((s, c) => s + (+c.totalPrice || 0), 0);
+  const paid = r2(cs.reduce((s, c) => s + c.paid, 0));
+  const overAmt = r2(cs.reduce((s, c) => s + c.overAmt, 0));
+  const overN = cs.reduce((s, c) => s + c.over.length, 0);
+  const nexts = cs.map(c => c.next && { ...c.next, device: c.device }).filter(Boolean).sort((a, b) => a.due.localeCompare(b.due));
+  const nx = nexts[0];
+  const pct = total ? Math.round(paid / total * 100) : 100;
+  const first = String(d.name || '').trim().split(/\s+/)[0];
+
+  let nextCard;
+  if (!rem) nextCard = `<div class="card next done"><div class="ic">🎉</div><div class="meta"><div class="d">خلّصت كل الأقساط</div><div class="t">شكراً لالتزامك</div></div></div>`;
+  else if (overN) nextCard = `<div class="card next over"><div class="ic">⚠️</div><div class="meta"><div class="t">عليك أقساط متأخرة</div><div class="d">${overN} قسط · من ${fmtD(cs.flatMap(c => c.over).sort((a, b) => a.due.localeCompare(b.due))[0].due)}</div></div><div class="a" style="color:var(--red)">${M(overAmt)}</div></div>`;
+  else nextCard = `<div class="card next"><div class="ic">📅</div><div class="meta"><div class="t">القسط الجاي · ${rel(nx.due)}</div><div class="d">${fmtD(nx.due)}</div></div><div class="a">${M(nx.amount - nx.paid)}</div></div>`;
+
+  const contractsHtml = cs.map((c, idx) => `
+    <div class="card contract ${cs.length === 1 ? 'open' : ''}" data-i="${idx}">
+      <div class="c-head" onclick="this.parentElement.classList.toggle('open')">
+        <div style="font-size:26px">📱</div>
+        <div><div class="dev">${esc(c.device)}</div><div class="sub">من ${fmtD(c.date)} · ${c.ins.length} قسط</div></div>
+        <span class="chev">▾</span>
+      </div>
+      <div class="c-stats">
+        <div><div class="t">السعر</div><div class="v">${money(c.totalPrice)}</div></div>
+        <div><div class="t">دفعت</div><div class="v" style="color:var(--green)">${money(c.paid)}</div></div>
+        <div><div class="t">فاضل</div><div class="v" style="color:var(--gold)">${money(c.rem)}</div></div>
+      </div>
+      <div class="c-bar"><i style="width:${c.pct}%"></i></div>
+      <div class="c-body">
+        ${+c.downPayment ? `<div class="inst"><div class="n">✓</div><div class="m"><b>المقدم</b><div>${fmtD(c.date)}</div></div><div class="amt">${money(c.downPayment)}</div><span class="pill p-paid">اتدفع ✓</span></div>` : ''}
+        ${c.ins.map(i => { const s = st(i); return `<div class="inst"><div class="n">${i.n}</div>
+          <div class="m"><b>${fmtD(i.due)}</b><div>${s === 'paid' ? (i.paidAt ? `اتدفع ${fmtD(i.paidAt)}` : 'اتدفع') : s === 'part' ? `دفعت ${money(i.paid)} · ${rel(i.due)}` : rel(i.due)}</div></div>
+          <div class="amt">${money(i.amount)}</div><span class="pill ${PL[s][0]}">${PL[s][1]}</span></div>`; }).join('')}
+      </div>
+    </div>`).join('');
+
+  const pays = cs.flatMap(c => (c.payments || []).map(p => ({ ...p, device: c.device }))).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  const wa = shopPhone ? (() => { let x = shopPhone.replace(/\D/g, ''); if (x.startsWith('0')) x = '20' + x.slice(1); return x; })() : '';
+
+  $('#accView').innerHTML = `
+    <div class="hello"><div><small>أهلاً بيك</small><h2>${esc(first || d.name)} 👋</h2></div><button class="ghost" id="out">خروج</button></div>
+    <div class="hero">
+      <div class="t">إجمالي المتبقي عليك</div>
+      <div class="v">${M(rem)}</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="row"><span>دفعت ${money(paid)} من ${money(total)}</span><span>${pct}%</span></div>
+    </div>
+    ${nextCard}
+    ${cs.length ? `<div class="sec">أجهزتك <small>${cs.length} ${cs.length === 1 ? 'جهاز' : 'أجهزة'}</small></div>${contractsHtml}` : ''}
+    ${pays.length ? `<div class="sec">الدفعات اللي دفعتها <small>${pays.length}</small></div>
+      <div class="card" style="padding:0"><div class="pays">${pays.map(p => `<div class="pay"><span>${fmtD(p.date)}${cs.length > 1 ? ` · ${esc(p.device)}` : ''}</span><b>${money(p.amount)} ${esc(CUR)}</b></div>`).join('')}</div></div>` : ''}
+    ${shopPhone ? `<div class="contact"><a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">واتساب المحل</a><a class="call" href="tel:${esc(shopPhone)}">اتصل بينا</a></div>` : ''}
+    <div class="foot">${d.synced_at ? `آخر تحديث للبيانات: ${fmtD(toStr(new Date(d.synced_at)))}<br>` : ''}لو فيه أي اختلاف في الحساب كلّم المحل</div>`;
+  $('#loginView').classList.add('hide');
+  const acc = $('#accView'); acc.classList.remove('hide'); acc.classList.remove('fade'); void acc.offsetWidth; acc.classList.add('fade');
+  $('#out').onclick = () => { $('#nid').value = ''; acc.classList.add('hide'); acc.innerHTML = ''; $('#loginView').classList.remove('hide'); };
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

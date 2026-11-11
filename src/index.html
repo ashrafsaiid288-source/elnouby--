@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; script-src 'self'">
+  <title>النوبي — سيستم الأقساط</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe2a3"/><stop offset=".5" stop-color="#f2b544"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient></defs>
+  </svg>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="drag-top drag"></div>
+      <div class="brand">
+        <div class="logo">ن</div>
+        <div>
+          <div class="brand-name" id="brandName">النوبي</div>
+          <div class="brand-sub">سيستم الأقساط</div>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <button data-page="dashboard" class="active"><span data-ic="home"></span>الرئيسية</button>
+        <button data-page="due"><span data-ic="clock"></span>التحصيل<span class="badge" id="dueBadge" hidden>0</span></button>
+        <button data-page="messages"><span data-ic="message"></span>الرسايل<span class="badge gold" id="msgBadge" hidden>0</span></button>
+        <button data-page="customers"><span data-ic="users"></span>العملاء</button>
+        <button data-page="contracts"><span data-ic="phone"></span>العقود</button>
+        <button data-page="reports"><span data-ic="chart"></span>التقارير</button>
+        <button data-page="settings"><span data-ic="settings"></span>الإعدادات</button>
+      </nav>
+      <div class="side-foot">
+        <button class="sync-chip" id="syncChip" data-go="settings" title="المزامنة مع السحابة"><i></i><span>السحابة مش متظبطة</span></button>
+        <button class="btn primary block" id="quickContract"><span data-ic="plus"></span>عقد قسط جديد</button>
+        <button class="theme-btn" id="themeBtn"><span data-ic="moon"></span><span id="themeLbl">الوضع الفاتح</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar drag">
+        <div>
+          <h1 id="pageTitle">الرئيسية</h1>
+          <div class="today" id="todayLbl"></div>
+        </div>
+        <div class="search nodrag">
+          <span data-ic="search"></span>
+          <input id="globalSearch" placeholder="ابحث باسم العميل أو رقم الموبايل">
+          <kbd>Ctrl F</kbd>
+          <div class="search-results" id="searchResults"></div>
+        </div>
+      </header>
+      <section id="view" class="view"></section>
+    </main>
+  </div>
+
+  <div class="modal-back" id="modalBack"><div class="modal" id="modal"></div></div>
+  <div class="drawer-back" id="drawerBack"><div class="drawer" id="drawer"></div></div>
+  <div class="toasts" id="toasts"></div>
+  <div id="printArea"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

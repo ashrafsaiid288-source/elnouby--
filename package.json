@@ -1,0 +1,67 @@
+{
+  "name": "nouby-installments",
+  "version": "1.2.0",
+  "description": "سيستم أقساط النوبي",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "keywords": [],
+  "author": "Hypersoft",
+  "license": "ISC",
+  "devDependencies": {
+    "@fontsource/alexandria": "^5.3.0",
+    "@fontsource/cairo": "^5.0.0",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  },
+  "productName": "Al-Nouby",
+  "build": {
+    "appId": "com.hypersoft.nouby",
+    "productName": "Al-Nouby",
+    "copyright": "Hypersoft",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "build/icon.png",
+      "cloud.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "النوبي - الأقساط",
+      "artifactName": "Al-Nouby-Setup-${version}.${ext}",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "language": "1025"
+    },
+    "portable": {
+      "artifactName": "Al-Nouby-Portable-${version}.${ext}"
+    },
+    "publish": null
+  }
+}
